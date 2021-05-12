@@ -13,17 +13,19 @@
 									<div class="title">
 										<h5><span>筛选条件</span></h5>
 									</div>
-									<mm_list col="3">
+									<mm_list :col="3">
 										<mm_item>
 											<control_input v-model="query.keyword" title="关键词" desc="分类名称 / 分类标题 / 分类描述"
-											 @blur="search()" />
+												@blur="search()" />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.father_id" title="上级分类" :options="$to_kv(list_product_type, 'type_id', 'name')"
-											 @change="search()" />
+											<control_select v-model="query.father_id" title="上级分类"
+												:options="$to_kv(list_product_type, 'type_id', 'name')"
+												@change="search()" />
 										</mm_item>
 										<mm_item>
-											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
+											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">
+												重置</mm_btn>
 										</mm_item>
 									</mm_list>
 								</mm_form>
@@ -31,47 +33,62 @@
 									<h5><span>操作</span></h5>
 									<div class="btns">
 										<mm_btn class="btn_primary-x" url="./product_type_form?">添加</mm_btn>
-										<mm_btn @click.native="show = true" class="btn_primary-x" v-bind:class="{ 'disabled': !selects }">批量修改</mm_btn>
+										<mm_btn @click.native="show = true" class="btn_primary-x"
+											v-bind:class="{ 'disabled': !selects }">批量修改</mm_btn>
 									</div>
 									<div class="btn_small">
-										<control_file class="btn_default-x" type="excel" :func="import_db" v-if="url_import"></control_file>
-										<mm_btn class="btn_default-x" @click.native="export_db()" v-if="url_export">导出</mm_btn>
+										<control_file class="btn_default-x" type="excel" :func="import_db"
+											v-if="url_import"></control_file>
+										<mm_btn class="btn_default-x" @click.native="export_db()" v-if="url_export">导出
+										</mm_btn>
 									</div>
 								</div>
 								<mm_table type="3">
 									<thead class="table-sm">
 										<tr>
 											<th class="th_open"></th>
-											<th class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
+											<th class="th_selected"><input type="checkbox" :checked="select_state"
+													@click="select_all()" /></th>
 											<th class="th_id"><span>#</span></th>
 											<th>
-												<control_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></control_reverse>
+												<control_reverse title="显示顺序" v-model="query.orderby" field="display"
+													:func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="上级分类" v-model="query.orderby" field="father_id" :func="search"></control_reverse>
+												<control_reverse title="上级分类" v-model="query.orderby" field="father_id"
+													:func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="分类名称" v-model="query.orderby" field="name" :func="search"></control_reverse>
+												<control_reverse title="分类名称" v-model="query.orderby" field="name"
+													:func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="分类标题" v-model="query.orderby" field="title" :func="search"></control_reverse>
+												<control_reverse title="分类标题" v-model="query.orderby" field="title"
+													:func="search"></control_reverse>
 											</th>
 											<th>
-												<control_reverse title="分类描述" v-model="query.orderby" field="description" :func="search"></control_reverse>
+												<control_reverse title="分类描述" v-model="query.orderby"
+													field="description" :func="search"></control_reverse>
 											</th>
 											<th class="th_handle"><span>操作</span></th>
 										</tr>
 									</thead>
 									<tbody>
 										<!-- <draggable v-model="list" tag="tbody" @change="sort_change"> -->
-										<tr v-for="(o, idx) in list_new" :key="idx" :class="{'active': select == idx, sub: o[father_id], open: opens_has(o[field]), no_sub: !opens_has_sub(o[field]) }"
-										 @click="selected(idx)">
-											<th class="th_open"><button class="btn_open" :style="'margin-left:' + (1.5 * opens_lv(o[father_id])) + 'rem;'"
-												 @click="opens_change(o[field])"><i class="fa-caret-right"></i></button></th>
-											<th class="th_selected"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
+										<tr v-for="(o, idx) in list_new" :key="idx"
+											:class="{'active': select == idx, sub: o[father_id], open: opens_has(o[field]), no_sub: !opens_has_sub(o[field]) }"
+											@click="selected(idx)">
+											<th class="th_open"><button class="btn_open"
+													:style="'margin-left:' + (1.5 * opens_lv(o[father_id])) + 'rem;'"
+													@click="opens_change(o[field])"><i
+														class="fa-caret-right"></i></button></th>
+											<th class="th_selected"><input type="checkbox"
+													:checked="select_has(o[field])" @click="select_change(o[field])" />
+											</th>
 											<td>{{ o[field] }}</td>
 											<td>
-												<input class="input_display" v-model.number="o.display" @blur="set(o)" min="0" max="1000" />
+												<input class="input_display" v-model.number="o.display" @blur="set(o)"
+													min="0" max="1000" />
 											</td>
 											<td>
 												<span>{{ get_name(list_product_type, o.father_id, 'type_id', 'name') }}</span>
@@ -86,8 +103,10 @@
 												<control_input :auto="true" v-model="o.description" @blur="set(o)" />
 											</td>
 											<td>
-												<mm_btn class="btn_primary" :url="'./product_type_form?type_id=' + o[field]">修改</mm_btn>
-												<mm_btn class="btn_warning" @click.native="del_show(o, field)">删除</mm_btn>
+												<mm_btn class="btn_primary"
+													:url="'./product_type_form?type_id=' + o[field]">修改</mm_btn>
+												<mm_btn class="btn_warning" @click.native="del_show(o, field)">删除
+												</mm_btn>
 											</td>
 										</tr>
 									</tbody>
@@ -108,7 +127,8 @@
 					<dl>
 						<dt>上级分类</dt>
 						<dd>
-							<control_select v-model="form.father_id" :options="$to_kv(list_product_type, 'type_id', 'name')" />
+							<control_select v-model="form.father_id"
+								:options="$to_kv(list_product_type, 'type_id', 'name')" />
 						</dd>
 					</dl>
 				</div>
@@ -165,9 +185,11 @@
 				},
 				form: {},
 				//颜色
-				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info', 'font_default'],
+				arr_color: ['', '', 'font_yellow', 'font_success', 'font_warning', 'font_primary', 'font_info',
+					'font_default'
+				],
 				// 上级分类
-				'list_product_type':[],
+				'list_product_type': [],
 				// 视图模型
 				vm: {}
 			}
@@ -186,8 +208,8 @@
 				}
 				this.$get('~/apis/mall/product_type?size=0', query, function(json) {
 					if (json.result) {
-						_this.list_product_type .clear();
-						_this.list_product_type .addList(json.result.list)
+						_this.list_product_type.clear();
+						_this.list_product_type.addList(json.result.list)
 					}
 				});
 			},
@@ -201,6 +223,7 @@
 				var lt = this.list.toTree(this.field).toList();
 				var list = [];
 				var arr = this.opens;
+				console.log(lt, arr);
 				for (var i = 0; i < lt.length; i++) {
 					var o = lt[i];
 					if (this.opens.indexOf(o[this.father_id]) !== -1) {
