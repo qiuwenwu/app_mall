@@ -85,7 +85,7 @@
 										</dd>
 										<dt>收藏者</dt>
 										<dd>
-											<mm_textarea v-model="form.collecter" type="text" placeholder="多个收藏者用”,“分隔"></mm_textarea>
+											<control_textarea v-model="form.collecter" type="text" placeholder="多个收藏者用”,“分隔"></control_textarea>
 										</dd>
 										<dt>品牌</dt>
 										<dd>
