@@ -89,10 +89,10 @@
 												<input class="input_display" v-model.number="o.display" @blur="set(o)" min="0" max="1000" />
 											</td>
 											<td>
-												<span>{{ get_name(list_product, o.product_id, 'product_id', 'title') }}</span>
+												<span>{{ $get_name(list_product, o.product_id, 'product_id', 'title') }}</span>
 											</td>
 											<td>
-												<span>{{ get_name(list_account, o.user_id, 'user_id', 'nickname') }}</span>
+												<span>{{ $get_name(list_account, o.user_id, 'user_id', 'nickname') }}</span>
 											</td>
 											<td>
 												<span>{{ o.name }}</span>

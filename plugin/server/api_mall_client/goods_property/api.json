@@ -1,0 +1,12 @@
+{
+    "name": "mall_goods_property",
+    "title": "商品属性",
+    "description": "",
+    "path": "/api/mall/goods_property",
+    "method": "GET",
+    "cache": 0,
+    "client_cache": false,
+    "param_path": "./param.json",
+    "sql_path": "./sql.json",
+    "check_param": true
+}

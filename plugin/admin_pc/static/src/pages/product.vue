@@ -140,22 +140,22 @@
 												<span v-bind:class="arr_color[o.state]">{{arr_state[o.state] }}</span>
 											</td>
 											<td>
-												<span>{{ get_name(list_product_type, o.type_id, 'type_id', 'name') }}</span>
+												<span>{{ $get_name(list_product_type, o.type_id, 'type_id', 'name') }}</span>
 											</td>
 											<td>
 												<input class="input_display" v-model.number="o.display" @blur="set(o)" min="0" max="1000" />
 											</td>
 											<td>
-												<span>{{ get_name(list_product_channel, o.channel_id, 'channel_id', 'name') }}</span>
+												<span>{{ $get_name(list_product_channel, o.channel_id, 'channel_id', 'name') }}</span>
 											</td>
 											<td>
-												<span>{{ get_name(list_shop, o.shop_id, 'shop_id', 'name') }}</span>
+												<span>{{ $get_name(list_shop, o.shop_id, 'shop_id', 'name') }}</span>
 											</td>
 											<td>
-												<span>{{ get_name(list_product_group, o.group_id, 'group_id', 'name') }}</span>
+												<span>{{ $get_name(list_product_group, o.group_id, 'group_id', 'name') }}</span>
 											</td>
 											<td>
-												<span>{{ get_name(list_address_city, o.city_id, 'city_id', 'name') }}</span>
+												<span>{{ $get_name(list_address_city, o.city_id, 'city_id', 'name') }}</span>
 											</td>
 											<td>
 												<span>{{ o.hot }}</span>

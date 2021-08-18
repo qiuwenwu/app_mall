@@ -79,7 +79,7 @@
 												<span>{{ o.description }}</span>
 											</td>
 											<td>
-												<span>{{ get_name(list_shop, o.shop_id, 'shop_id', 'name') }}</span>
+												<span>{{ $get_name(list_shop, o.shop_id, 'shop_id', 'name') }}</span>
 											</td>
 											<td>
 												<mm_btn class="btn_primary" :url="'./product_group_form?group_id=' + o[field]">修改</mm_btn>

@@ -91,7 +91,7 @@
 													min="0" max="1000" />
 											</td>
 											<td>
-												<span>{{ get_name(list_product_type, o.father_id, 'type_id', 'name') }}</span>
+												<span>{{ $get_name(list_product_type, o.father_id, 'type_id', 'name') }}</span>
 											</td>
 											<td>
 												<control_input :auto="true" v-model="o.name" @blur="set(o)" />
