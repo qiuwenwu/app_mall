@@ -25,7 +25,7 @@
 										</dd>
 										<dt>店铺</dt>
 										<dd>
-											<control_select v-model="form.shop_id" :options="$to_kv(list_shop, 'shop_id', 'name', 0)" />
+											<control_select v-model="form.shop_id" :options="$to_kv(list_shop, 'shop_id', 'name', '0')" />
 										</dd>
 										<dt>分组图标</dt>
 										<dd>
@@ -57,7 +57,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/mall/product_group?",
+				url_add: "/apis/mall/product_group?method=add",
+				url_set: "/apis/mall/product_group?method=set",
 				url_get_obj: "/apis/mall/product_group?method=get_obj",
 				field: "group_id",
 				query: {

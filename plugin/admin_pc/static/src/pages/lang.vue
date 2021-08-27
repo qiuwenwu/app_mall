@@ -15,7 +15,7 @@
 									</div>
 									<mm_list :col="3">
 										<mm_item>
-											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
+											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();">重置</mm_btn>
 										</mm_item>
 									</mm_list>
 								</mm_form>
@@ -33,7 +33,6 @@
 								<mm_table type="2">
 									<thead class="table-sm">
 										<tr>
-											<th class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 											<th class="th_id"><span>#</span></th>
 											<th>
 												<control_reverse title="主键" v-model="query.orderby" field="key" :func="search"></control_reverse>
@@ -59,25 +58,24 @@
 									<tbody>
 										<!-- <draggable v-model="list" tag="tbody" @change="sort_change"> -->
 										<tr v-for="(o, idx) in list" :key="idx" :class="{'active': select == idx}" @click="selected(idx)">
-											<th class="th_selected"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
 											<td>{{ o[field] }}</td>
 											<td>
-												<span>{{ o.key }}</span>
+												<control_input :auto="true" v-model="o.key" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.en }}</span>
+												<control_input :auto="true" v-model="o.en" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.zh_cn }}</span>
+												<control_input :auto="true" v-model="o.zh_cn" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.zh_tw }}</span>
+												<control_input :auto="true" v-model="o.zh_tw" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.ko }}</span>
+												<control_input :auto="true" v-model="o.ko" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.ja }}</span>
+												<control_input :auto="true" v-model="o.ja" @blur="set(o)" />
 											</td>
 											<td>
 												<mm_btn class="btn_primary" :url="'./lang_form?lang_id=' + o[field]">修改</mm_btn>
@@ -110,7 +108,7 @@
 				<div class="card_head">
 					<h5>批量修改</h5>
 				</div>
-				<div class="card_body">
+				<div class="card_body pa">
 					<dl>
 					</dl>
 				</div>

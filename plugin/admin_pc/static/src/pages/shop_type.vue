@@ -16,14 +16,14 @@
 									<mm_list :col="3">
 										<mm_item>
 											<control_input v-model="query.keyword" title="关键词" desc="分类名称 / 分类标题 / 分类描述"
-											 @blur="search()" />
+											  />
 										</mm_item>
 										<mm_item>
 											<control_select v-model="query.father_id" title="上级分类" :options="$to_kv(list_shop_type, 'type_id', 'name')"
-											 @change="search()" />
+											 />
 										</mm_item>
 										<mm_item>
-											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
+											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();">重置</mm_btn>
 										</mm_item>
 									</mm_list>
 								</mm_form>
@@ -45,19 +45,19 @@
 											<th class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 											<th class="th_id"><span>#</span></th>
 											<th>
-												<control_reverse title="显示顺序" v-model="query.orderby" field="display" :func="search"></control_reverse>
+												<span>显示顺序</span>
 											</th>
 											<th>
-												<control_reverse title="上级分类" v-model="query.orderby" field="father_id" :func="search"></control_reverse>
+												<span>上级分类</span>
 											</th>
 											<th>
-												<control_reverse title="分类名称" v-model="query.orderby" field="name" :func="search"></control_reverse>
+												<span>分类名称</span>
 											</th>
 											<th>
-												<control_reverse title="分类标题" v-model="query.orderby" field="title" :func="search"></control_reverse>
+												<span>分类标题</span>
 											</th>
 											<th>
-												<control_reverse title="分类描述" v-model="query.orderby" field="description" :func="search"></control_reverse>
+												<span>分类描述</span>
 											</th>
 											<th class="th_handle"><span>操作</span></th>
 										</tr>
@@ -104,7 +104,7 @@
 				<div class="card_head">
 					<h5>批量修改</h5>
 				</div>
-				<div class="card_body">
+				<div class="card_body pa">
 					<dl>
 						<dt>上级分类</dt>
 						<dd>
@@ -142,26 +142,12 @@
 				},
 				// 查询条件
 				query: {
-					//页码
-					page: 0,
-					//页面大小
-					size: 0,
-					// 店铺分类ID
-					'type_id': 0,
-					// 显示顺序——最小值
-					'display_min': 0,
-					// 显示顺序——最大值
-					'display_max': 0,
-					// 分类名称
-					'name': '',
-					// 分类标题
-					'title': '',
-					// 分类描述
-					'description': '',
-					// 关键词
-					'keyword': '',
 					//排序
-					orderby: ""
+					orderby: "",
+					// 上级分类ID
+					father_id: '',
+					// 关键词
+					keyword: ''
 				},
 				form: {},
 				//颜色
@@ -191,6 +177,15 @@
 					}
 				});
 			},
+			/**
+			 * 获取列表之前
+			 * @param {Object} param 参数
+			 */
+			get_list_before(param){
+				delete param.page;
+				param.size = "0";
+				return param;
+			}
 		},
 		created() {
 			// 获取上级分类
@@ -198,16 +193,36 @@
 		},
 		computed: {
 			list_new() {
-				var lt = this.list.toTree(this.field).toList();
 				var list = [];
-				var arr = this.opens;
-				for (var i = 0; i < lt.length; i++) {
-					var o = lt[i];
-					if (this.opens.indexOf(o[this.father_id]) !== -1) {
-						list.push(o);
+				var {
+					keyword,
+					father_id
+				} = this.query;
+					
+				if (keyword && father_id) {
+					return this.list.filter(function(o) {
+						return o.father_id == father_id && (o.title.indexOf(keyword) !== -1 || o.name.indexOf(
+							keyword) !== -1);
+					});
+				} else if (father_id) {
+					return this.list.filter(function(o) {
+						return o.father_id == father_id;
+					});
+				} else if (keyword) {
+					return this.list.filter(function(o) {
+						return o.title.indexOf(keyword) !== -1 || o.name.indexOf(keyword) !== -1;
+					});
+				} else {
+					var lt = this.list.toTree(this.field).toList();
+					var arr = this.opens;
+					for (var i = 0; i < lt.length; i++) {
+						var o = lt[i];
+						if (this.opens.indexOf(o[this.father_id]) !== -1) {
+							list.push(o);
+						}
 					}
+					return list;
 				}
-				return list;
 			}
 		}
 	}

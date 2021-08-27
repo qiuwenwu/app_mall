@@ -16,27 +16,27 @@
 									<mm_list :col="3">
 										<mm_item>
 											<control_input v-model="query.keyword" title="关键词" desc="频道名称 / 频道标题 / 描述"
-											 @blur="search()" />
+											  />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.available" title="是否启用" :options="$to_kv(arr_available)" @change="search()" />
+											<control_select v-model="query.available" title="是否启用" :options="$to_kv(arr_available)" />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.hide" title="是否隐藏" :options="$to_kv(arr_hide)" @change="search()" />
+											<control_select v-model="query.hide" title="是否隐藏" :options="$to_kv(arr_hide)" />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.can_comment" title="是否可评论" :options="$to_kv(arr_can_comment)" @change="search()" />
+											<control_select v-model="query.can_comment" title="是否可评论" :options="$to_kv(arr_can_comment)" />
 										</mm_item>
 										<mm_item>
 											<control_select v-model="query.father_id" title="上级" :options="$to_kv(list_product_channel, 'channel_id', 'name')"
-											 @change="search()" />
+											 />
 										</mm_item>
 										<mm_item>
 											<control_select v-model="query.city_id" title="所属城市" :options="$to_kv(list_address_city, 'city_id', 'name')"
-											 @change="search()" />
+											 />
 										</mm_item>
 										<mm_item>
-											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
+											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();">重置</mm_btn>
 										</mm_item>
 									</mm_list>
 								</mm_form>
@@ -159,7 +159,7 @@
 				<div class="card_head">
 					<h5>批量修改</h5>
 				</div>
-				<div class="card_body">
+				<div class="card_body pa">
 					<dl>
 						<dt>是否启用</dt>
 						<dd>
@@ -216,7 +216,7 @@
 					//页码
 					page: 0,
 					//页面大小
-					size: 0,
+					size: '0',
 					// 频道ID
 					'channel_id': 0,
 					// 是否启用
@@ -294,6 +294,15 @@
 					}
 				});
 			},
+			/**
+			 * 获取列表之前
+			 * @param {Object} param 参数
+			 */
+			get_list_before(param){
+				delete param.page;
+				param.size = "0";
+				return param;
+			}
 		},
 		created() {
 			// 获取上级

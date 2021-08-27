@@ -25,11 +25,11 @@
 										</dd>
 										<dt>上级</dt>
 										<dd>
-											<control_select v-model="form.father_id" :options="$to_kv(list_product_channel, 'channel_id', 'name', 0)" />
+											<control_select v-model="form.father_id" :options="$to_kv(list_product_channel, 'channel_id', 'name', '0')" />
 										</dd>
 										<dt>所属城市</dt>
 										<dd>
-											<control_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id', 'name', 0)" />
+											<control_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id', 'name', '0')" />
 										</dd>
 										<dt class="required">频道类型</dt>
 										<dd>
@@ -87,7 +87,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/mall/product_channel?",
+				url_add: "/apis/mall/product_channel?method=add",
+				url_set: "/apis/mall/product_channel?method=set",
 				url_get_obj: "/apis/mall/product_channel?method=get_obj",
 				field: "channel_id",
 				query: {

@@ -49,7 +49,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/mall/product_property?",
+				url_add: "/apis/mall/product_property?method=add",
+				url_set: "/apis/mall/product_property?method=set",
 				url_get_obj: "/apis/mall/product_property?method=get_obj",
 				field: "property_id",
 				query: {

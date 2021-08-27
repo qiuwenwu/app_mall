@@ -53,7 +53,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/mall/product_augmented?",
+				url_add: "/apis/mall/product_augmented?method=add",
+				url_set: "/apis/mall/product_augmented?method=set",
 				url_get_obj: "/apis/mall/product_augmented?method=get_obj",
 				field: "augmented_id",
 				query: {

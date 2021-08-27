@@ -21,11 +21,11 @@
 										</dd>
 										<dt>所属店铺</dt>
 										<dd>
-											<control_select v-model="form.shop_id" :options="$to_kv(list_shop, 'shop_id', 'name', 0)" />
+											<control_select v-model="form.shop_id" :options="$to_kv(list_shop, 'shop_id', 'name', '0')" />
 										</dd>
 										<dt>用户</dt>
 										<dd>
-											<control_select v-model="form.user_id" :options="$to_kv(list_account, 'user_id', 'nickname', 0)" />
+											<control_select v-model="form.user_id" :options="$to_kv(list_account, 'user_id', 'nickname', '0')" />
 										</dd>
 										<dt>留言者姓名</dt>
 										<dd>
@@ -69,7 +69,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/mall/shop_comment?",
+				url_add: "/apis/mall/shop_comment?method=add",
+				url_set: "/apis/mall/shop_comment?method=set",
 				url_get_obj: "/apis/mall/shop_comment?method=get_obj",
 				field: "comment_id",
 				query: {

@@ -21,19 +21,19 @@
 										</dd>
 										<dt>店铺分类</dt>
 										<dd>
-											<control_select v-model="form.type_id" :options="$to_kv(list_shop_type, 'type_id', 'name', 0)" />
+											<control_select v-model="form.type_id" :options="$to_kv(list_shop_type, 'type_id', 'name', '0')" />
 										</dd>
 										<dt>频道</dt>
 										<dd>
-											<control_select v-model="form.channel_id" :options="$to_kv(list_shop_channel, 'channel_id', 'name', 0)" />
+											<control_select v-model="form.channel_id" :options="$to_kv(list_shop_channel, 'channel_id', 'name', '0')" />
 										</dd>
 										<dt>所属城市</dt>
 										<dd>
-											<control_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id', 'name', 0)" />
+											<control_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id', 'name', '0')" />
 										</dd>
 										<dt>店铺所属人</dt>
 										<dd>
-											<control_select v-model="form.user_id" :options="$to_kv(list_account, 'user_id', 'nickname', 0)" />
+											<control_select v-model="form.user_id" :options="$to_kv(list_account, 'user_id', 'nickname', '0')" />
 										</dd>
 										<dt>热度</dt>
 										<dd>
@@ -93,7 +93,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/mall/shop?",
+				url_add: "/apis/mall/shop?method=add",
+				url_set: "/apis/mall/shop?method=set",
 				url_get_obj: "/apis/mall/shop?method=get_obj",
 				field: "shop_id",
 				query: {

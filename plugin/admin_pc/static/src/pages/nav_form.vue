@@ -50,7 +50,7 @@
 										</dd>
 										<dt>上级</dt>
 										<dd>
-											<control_select v-model="form.father_id" :options="$to_kv(list_nav, 'nav_id', 'name', 0)" />
+											<control_select v-model="form.father_id" :options="$to_kv(list_nav, 'nav_id', 'name', '0')" />
 										</dd>
 									</dl>
 								</mm_form>
@@ -78,7 +78,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/mall/nav?",
+				url_add: "/apis/mall/nav?method=add",
+				url_set: "/apis/mall/nav?method=set",
 				url_get_obj: "/apis/mall/nav?method=get_obj",
 				field: "nav_id",
 				query: {

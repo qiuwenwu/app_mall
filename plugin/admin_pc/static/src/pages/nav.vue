@@ -16,17 +16,17 @@
 									<mm_list :col="3">
 										<mm_item>
 											<control_input v-model="query.keyword" title="关键词" desc="英文名称 / 中文标题"
-											 @blur="search()" />
+											  />
 										</mm_item>
 										<mm_item>
-											<control_select v-model="query.available" title="是否启用" :options="$to_kv(arr_available)" @change="search()" />
+											<control_select v-model="query.available" title="是否启用" :options="$to_kv(arr_available)" />
 										</mm_item>
 										<mm_item>
 											<control_select v-model="query.father_id" title="上级" :options="$to_kv(list_nav, 'nav_id', 'name')"
-											 @change="search()" />
+											 />
 										</mm_item>
 										<mm_item>
-											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();search()">重置</mm_btn>
+											<mm_btn class="btn_primary-x" type="reset" @click.native="reset();">重置</mm_btn>
 										</mm_item>
 									</mm_list>
 								</mm_form>
@@ -41,75 +41,79 @@
 										<mm_btn class="btn_default-x" @click.native="export_db()" v-if="url_export">导出</mm_btn>
 									</div>
 								</div>
-								<mm_table type="2">
+								<mm_table type="3">
 									<thead class="table-sm">
 										<tr>
+											<th class="th_open"></th>
 											<th class="th_selected"><input type="checkbox" :checked="select_state" @click="select_all()" /></th>
 											<th class="th_id"><span>#</span></th>
 											<th>
-												<control_reverse title="是否启用" v-model="query.orderby" field="available" :func="search"></control_reverse>
+												<span>是否启用</span>
 											</th>
 											<th>
-												<control_reverse title="英文名称" v-model="query.orderby" field="name" :func="search"></control_reverse>
+												<span>英文名称</span>
 											</th>
 											<th>
-												<control_reverse title="中文标题" v-model="query.orderby" field="title" :func="search"></control_reverse>
+												<span>中文标题</span>
 											</th>
 											<th>
-												<control_reverse title="跳转链接" v-model="query.orderby" field="url" :func="search"></control_reverse>
+												<span>跳转链接</span>
 											</th>
 											<th>
-												<control_reverse title="风格样式" v-model="query.orderby" field="style" :func="search"></control_reverse>
+												<span>风格样式</span>
 											</th>
 											<th>
-												<control_reverse title="样式类型" v-model="query.orderby" field="class" :func="search"></control_reverse>
+												<span>样式类型</span>
 											</th>
 											<th>
-												<control_reverse title="跳转方式" v-model="query.orderby" field="target" :func="search"></control_reverse>
+												<span>跳转方式</span>
 											</th>
 											<th>
-												<control_reverse title="展现位置" v-model="query.orderby" field="position" :func="search"></control_reverse>
+												<span>展现位置</span>
 											</th>
 											<th>
-												<control_reverse title="呈现设备" v-model="query.orderby" field="device" :func="search"></control_reverse>
+												<span>呈现设备</span>
 											</th>
 											<th>
-												<control_reverse title="上级" v-model="query.orderby" field="father_id" :func="search"></control_reverse>
+												<span>上级</span>
 											</th>
 											<th class="th_handle"><span>操作</span></th>
 										</tr>
 									</thead>
 									<tbody>
 										<!-- <draggable v-model="list" tag="tbody" @change="sort_change"> -->
-										<tr v-for="(o, idx) in list" :key="idx" :class="{'active': select == idx}" @click="selected(idx)">
+										<tr v-for="(o, idx) in list_new" :key="idx" :class="{'active': select == idx, sub: o[father_id], open: opens_has(o[field]), no_sub: !opens_has_sub(o[field]) }"
+										 @click="selected(idx)">
+											<th class="th_open"><button class="btn_open" :style="'margin-left:' + (1.5 * opens_lv(o[father_id])) + 'rem;'"
+												 @click="opens_change(o[field])"><i class="fa-caret-right"></i></button></th>
 											<th class="th_selected"><input type="checkbox" :checked="select_has(o[field])" @click="select_change(o[field])" /></th>
 											<td>{{ o[field] }}</td>
 											<td>
 												<control_switch v-model="o.available" @click.native="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.name }}</span>
+												<control_input :auto="true" v-model="o.name" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.title }}</span>
+												<control_input :auto="true" v-model="o.title" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.url }}</span>
+												<control_input :auto="true" v-model="o.url" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.style }}</span>
+												<control_input :auto="true" v-model="o.style" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.class }}</span>
+												<control_input :auto="true" v-model="o.class" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.target }}</span>
+												<control_input :auto="true" v-model="o.target" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.position }}</span>
+												<control_input :auto="true" v-model="o.position" @blur="set(o)" />
 											</td>
 											<td>
-												<span>{{ o.device }}</span>
+												<control_input :auto="true" v-model="o.device" @blur="set(o)" />
 											</td>
 											<td>
 												<span>{{ $get_name(list_nav, o.father_id, 'nav_id', 'name') }}</span>
@@ -123,18 +127,6 @@
 									<!-- </draggable> -->
 								</mm_table>
 							</div>
-							<div class="card_foot">
-								<div class="fl">
-									<control_select v-model="query.size" :options="$to_size()" @change="search()" />
-								</div>
-								<div class="fr">
-									<span class="mr">共 {{ count }} 条</span>
-									<span>当前</span>
-									<input type="number" class="pager_now" v-model.number="page_now" @blur="goTo(page_now)" @change="page_change" />
-									<span>/{{ page_count }}页</span>
-								</div>
-								<control_pager display="2" v-model="query.page" :count="count / query.size" :func="goTo" :icons="['首页', '上一页', '下一页', '尾页']"></control_pager>
-							</div>
 						</mm_card>
 					</mm_col>
 				</mm_row>
@@ -145,7 +137,7 @@
 				<div class="card_head">
 					<h5>批量修改</h5>
 				</div>
-				<div class="card_body">
+				<div class="card_body pa">
 					<dl>
 						<dt>是否启用</dt>
 						<dd>
@@ -187,22 +179,12 @@
 				},
 				// 查询条件
 				query: {
-					//页码
-					page: 1,
-					//页面大小
-					size: 10,
-					// 导航ID
-					'nav_id': 0,
-					// 是否启用
-					'available': '',
-					// 英文名称
-					'name': '',
-					// 中文标题
-					'title': '',
-					// 关键词
-					'keyword': '',
 					//排序
-					orderby: ""
+					orderby: "",
+					// 上级分类ID
+					father_id: '',
+					// 关键词
+					keyword: ''
 				},
 				form: {},
 				//颜色
@@ -229,15 +211,58 @@
 				}
 				this.$get('~/apis/mall/nav?size=0', query, function(json) {
 					if (json.result) {
-						_this.list_nav.clear();
-						_this.list_nav.addList(json.result.list)
+						_this.list_nav .clear();
+						_this.list_nav .addList(json.result.list)
 					}
 				});
 			},
+			/**
+			 * 获取列表之前
+			 * @param {Object} param 参数
+			 */
+			get_list_before(param){
+				delete param.page;
+				param.size = "0";
+				return param;
+			}
 		},
 		created() {
 			// 获取上级
 			this.get_nav();
+		},
+		computed: {
+			list_new() {
+				var list = [];
+				var {
+					keyword,
+					father_id
+				} = this.query;
+					
+				if (keyword && father_id) {
+					return this.list.filter(function(o) {
+						return o.father_id == father_id && (o.title.indexOf(keyword) !== -1 || o.name.indexOf(
+							keyword) !== -1);
+					});
+				} else if (father_id) {
+					return this.list.filter(function(o) {
+						return o.father_id == father_id;
+					});
+				} else if (keyword) {
+					return this.list.filter(function(o) {
+						return o.title.indexOf(keyword) !== -1 || o.name.indexOf(keyword) !== -1;
+					});
+				} else {
+					var lt = this.list.toTree(this.field).toList();
+					var arr = this.opens;
+					for (var i = 0; i < lt.length; i++) {
+						var o = lt[i];
+						if (this.opens.indexOf(o[this.father_id]) !== -1) {
+							list.push(o);
+						}
+					}
+					return list;
+				}
+			}
 		}
 	}
 </script>

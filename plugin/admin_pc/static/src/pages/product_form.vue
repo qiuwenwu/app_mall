@@ -21,23 +21,23 @@
 										</dd>
 										<dt>产品分类</dt>
 										<dd>
-											<control_select v-model="form.type_id" :options="$to_kv(list_product_type, 'type_id', 'name', 0)" />
+											<control_select v-model="form.type_id" :options="$to_kv(list_product_type, 'type_id', 'name', '0')" />
 										</dd>
 										<dt>频道</dt>
 										<dd>
-											<control_select v-model="form.channel_id" :options="$to_kv(list_product_channel, 'channel_id', 'name', 0)" />
+											<control_select v-model="form.channel_id" :options="$to_kv(list_product_channel, 'channel_id', 'name', '0')" />
 										</dd>
 										<dt>店铺</dt>
 										<dd>
-											<control_select v-model="form.shop_id" :options="$to_kv(list_shop, 'shop_id', 'name', 0)" />
+											<control_select v-model="form.shop_id" :options="$to_kv(list_shop, 'shop_id', 'name', '0')" />
 										</dd>
 										<dt>分组</dt>
 										<dd>
-											<control_select v-model="form.group_id" :options="$to_kv(list_product_group, 'group_id', 'name', 0)" />
+											<control_select v-model="form.group_id" :options="$to_kv(list_product_group, 'group_id', 'name', '0')" />
 										</dd>
 										<dt>所属城市</dt>
 										<dd>
-											<control_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id', 'name', 0)" />
+											<control_select v-model="form.city_id" :options="$to_kv(list_address_city, 'city_id', 'name', '0')" />
 										</dd>
 										<dt>热度</dt>
 										<dd>
@@ -117,7 +117,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/mall/product?",
+				url_add: "/apis/mall/product?method=add",
+				url_set: "/apis/mall/product?method=set",
 				url_get_obj: "/apis/mall/product?method=get_obj",
 				field: "product_id",
 				query: {

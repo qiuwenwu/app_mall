@@ -62,7 +62,8 @@
 		components: {},
 		data() {
 			return {
-				url: "/apis/mall/lang?",
+				url_add: "/apis/mall/lang?method=add",
+				url_set: "/apis/mall/lang?method=set",
 				url_get_obj: "/apis/mall/lang?method=get_obj",
 				field: "lang_id",
 				query: {
